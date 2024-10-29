@@ -1,0 +1,5 @@
+{
+    "database_url": "mysql://user:password@localhost/dbname",
+    "service_name": "ConfigService",
+    "timeout": 30
+}

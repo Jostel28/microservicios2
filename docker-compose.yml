@@ -1,0 +1,32 @@
+services:
+  usuarios:
+    build:
+      context: .
+      dockerfile: dockerfile.dockerfile  # Especifica el Dockerfile ubicado en la raíz
+    container_name: usuarios_service
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    networks:
+      - app-network
+    command: python servicios_usuarios.py  # Ejecuta el archivo específico para el servicio de usuarios
+
+  pedidos:
+    build:
+      context: .
+      dockerfile: dockerfile.dockerfile  # Usa el mismo Dockerfile para ambos servicios
+    container_name: pedidos_service
+    ports:
+      - "5001:5001"
+    env_file:
+      - .env
+    networks:
+      - app-network
+    depends_on:
+      - usuarios
+    command: python servicios_pedidos.py  # Ejecuta el archivo específico para el servicio de pedidos
+
+networks:
+  app-network:
+    driver: bridge
